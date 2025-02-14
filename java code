@@ -1,0 +1,822 @@
+priotiy.java
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package parking.management;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+class priority {
+static String dtm;
+static Calendar cal=Calendar.getInstance();
+static int pi= cal.get(Calendar.HOUR_OF_DAY);
+static int mi= cal.get(Calendar.MINUTE);
+String nw,namw,etimw,dtimw;
+static String []name=new String[100];
+static int []pn=new int[100];
+static String []no=new String[100];
+static String []emailid = new String[100];
+static String []etime = new String[100];
+static int []hetime = new int[100];
+static int []dtime = new int[100];
+static String []hdtime = new String[100];
+static String []dater = new String[100];
+static String []payt = new String[100];
+static int []ammount = new int[100];
+static int front=-1;
+static int rear=-1;
+public static int isfull()
+{
+if(rear==99)
+{
+JOptionPane.showInputDialog(null,"Warning","full");
+return 1;
+}
+else
+{
+return 0;
+}
+}
+/**
+*
+* @return
+*/
+public static int isempty()
+{
+if(front==-1)
+{
+JOptionPane.showInputDialog(null,"Warning","empty");
+return 1;
+}
+else
+{
+return 0;
+}
+}
+public static void enqueue(String nam,String n,String emaili ,
+String etim,int dtim, String pay, int ammoun,String date,int p)
+{
+System.out.print(dtim);
+int i=0;
+int j=0;
+if(front==-1 && rear==-1){
+front=0;
+rear=0;
+name[rear]=nam;
+no[rear]=n;
+emailid[rear]=emaili;
+etime[rear]=etim;
+dtime[rear]=dtim;
+payt[rear]=pay;
+ammount[rear]=ammoun;
+dater[rear]=date;
+pn[rear]=p;
+rear++;
+return;
+}
+if(isfull()==1)
+{
+return;
+}
+for(i=front;i<rear;i++)
+{
+if(dtime[i]>dtim)
+{
+for(j=rear-1;j>=0;j--)
+{
+name[j+1]=name[j];
+no[j+1]=no[j];
+emailid[j+1]=emailid[j];
+etime[j+1]=etime[j];
+dtime[j+1]=dtime[j];
+payt[j+1]=payt[j];
+ammount[j+1]=ammount[j];
+dater[j+1]=dater[j];
+pn[j+1]=pn[j];
+}
+name[j+1]=nam;
+no[j+1]=n;
+emailid[j+1]=emaili;
+etime[j+1]=etim;
+dtime[j+1]=dtim;
+payt[j+1]=pay;
+ammount[j+1]=ammoun;
+dater[j+1]=date;
+pn[j+1]=p;
+rear++;
+return;
+}
+}
+name[rear]=nam;
+no[rear]=n;
+emailid[rear]=emaili;
+etime[rear]=etim;
+dtime[rear]=dtim;
+payt[rear]=pay;
+ammount[rear]=ammoun;
+dater[j+1]=date;
+pn[j+1]=p;
+rear++;
+}
+public static int peekd(){
+return dtime[front];
+}
+static String peekc() {
+return name[front];
+}
+static String peeke() {
+return emailid[front];
+}
+static void deque(){
+if(front==-1){
+System.out.println("queue is empty");
+return ;}
+else{
+finelink le=new finelink();
+le.insert(name[front],no[front], emailid[front], etime[front], dtime[front],
+payt[front], ammount[front],dater[front],pn[front]);
+front++;
+System.out.println("element removed");
+}
+if(front==rear){
+front=-1;
+rear=-1;
+}
+return ;
+}
+public static void deletespecific(int p)
+{
+int i=front;
+while(pn[i]!=p)
+{
+i++;
+}
+viewlink l=new viewlink();
+dtm=pi+":"+mi;
+viewlink.insert(name[i],no[i], emailid[i], etime[i], dtm, payt[i],
+ammount[i],dater[i],pn[i]);
+for(int j=i;j<rear-1;j++)
+{
+name[j]=name[j+1];
+no[j]=no[j+1];
+emailid[j]=emailid[j+1];
+etime[j]=etime[j+1];
+dtime[j]=dtime[j+1];
+payt[j]=payt[j+1];
+ammount[j]=ammount[j+1];
+dater[j]=dater[j+1];
+pn[j]=pn[j+1];
+}
+rear--;
+}
+public String[] find(int p)
+{
+int i=Math.max(front, 0);
+System.out.println(pn.length+"plength"+" i="+i);
+while(pn[i]!=p && i<rear)
+{
+i++;
+}
+if(i>rear)
+{
+String []s={"1"};
+return s;
+}
+if(i==rear&& pn[i]!=p)
+{
+String []s={"1"};
+return s;
+}
+if(pn[i]==p&&i==rear)
+{nw= no[i];
+System.out.print(nw);
+namw= name[i];
+etimw= etime[i];
+dtimw= dtime[i]/60+ ":"+dtime[i]%60;
+System.out.print(namw);
+System.out.print(etimw);
+System.out.print(dtimw);
+String []s={namw,etimw,dtimw,nw};
+return s;
+}
+nw= no[i];
+System.out.print(nw);
+namw= name[i];
+etimw= etime[i];
+dtimw= dtime[i]/60+ ":"+dtime[i]%60;
+System.out.print(namw);
+System.out.print(etimw);
+System.out.print(dtimw);
+String []s={namw,etimw,dtimw,nw};
+return s;
+}
+}
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package parking.management;
+import javax.swing.table.DefaultTableModel;
+public class vacant extends java.awt.Frame {
+static String []zip =new String[100];
+static int k=0;
+int fi=0;
+public static void update(int p) {
+zip[p-1]=p+"full";
+}
+/**
+* Creates new form vacant
+*/
+public static void empupdate( int x)
+{
+zip[x-1]= "empty"+x;
+}
+public vacant() {
+initComponents();
+if(k==0)
+{
+for( int i=0;i<100;i++)
+{
+zip[i]= "empty"+(i+1);
+k++;
+}
+}
+disp();
+}
+public void disp()
+{
+DefaultTableModel model1 = (DefaultTableModel) jTable2.getModel();
+model1.setRowCount(0);
+int i=0;
+while(i!=100){
+Object []r={
+zip[i+0],zip[i+1],zip[i+2],zip[i+3],zip[i+4],zip[i+5],zip[i+6],zip[i+7],zip[i+8],
+zip[i+9]};
+model1.addRow(r);
+i= i+10;
+}
+}
+/**
+* This method is called from within the constructor to initialize the form.
+* WARNING: Do NOT modify this code. The content of this method is always
+* regenerated by the Form Editor.
+*/
+// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-
+BEGIN:initComponents
+private void initComponents() {
+jPanel1 = new javax.swing.JPanel();
+jButton1 = new javax.swing.JButton();
+jButton2 = new javax.swing.JButton();
+jScrollPane2 = new javax.swing.JScrollPane();
+jTable2 = new javax.swing.JTable();
+jLabel1 = new javax.swing.JLabel();
+addWindowListener(new java.awt.event.WindowAdapter() {
+public void windowClosing(java.awt.event.WindowEvent evt) {
+exitForm(evt);
+}
+});
+jButton1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+jButton1.setText("back");
+jButton1.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+jButton1ActionPerformed(evt);
+}
+});
+jButton2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+jButton2.setText("add vehicle");
+jButton2.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+jButton2ActionPerformed(evt);
+}
+});
+jTable2.setModel(new javax.swing.table.DefaultTableModel(
+new Object [][] {
+},
+new String [] {
+"V", "A", "C", "A", "N", "T", "R", "O", "O", "M"
+}
+) {
+boolean[] canEdit = new boolean [] {
+false, false, false, false, false, false, false, false, false,
+false
+};
+public boolean isCellEditable(int rowIndex, int columnIndex) {
+return canEdit [columnIndex];
+}
+});
+jScrollPane2.setViewportView(jTable2);
+if (jTable2.getColumnModel().getColumnCount() > 0) {
+jTable2.getColumnModel().getColumn(0).setResizable(false);
+jTable2.getColumnModel().getColumn(1).setResizable(false);
+jTable2.getColumnModel().getColumn(2).setResizable(false);
+jTable2.getColumnModel().getColumn(3).setResizable(false);
+jTable2.getColumnModel().getColumn(4).setResizable(false);
+jTable2.getColumnModel().getColumn(5).setResizable(false);
+jTable2.getColumnModel().getColumn(6).setResizable(false);
+jTable2.getColumnModel().getColumn(7).setResizable(false);
+jTable2.getColumnModel().getColumn(8).setResizable(false);
+jTable2.getColumnModel().getColumn(9).setResizable(false);
+}
+jLabel1.setIcon(new
+javax.swing.ImageIcon(getClass().getResource("/parking/management/Screenshot
+2023-10-10 230903.png"))); // NOI18N
+javax.swing.GroupLayout jPanel1Layout = new
+javax.swing.GroupLayout(jPanel1);
+jPanel1.setLayout(jPanel1Layout);
+jPanel1Layout.setHorizontalGroup(
+tyle.ComponentPlacement.RELAT
+ED)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.BASELINE)
+.addComponent(jButton1)
+.addComponent(jButton2))
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELAT
+ED)
+.addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+618, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addContainerGap(861, Short.MAX_VALUE))
+);
+javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+this.setLayout(layout);
+layout.setHorizontalGroup(
+layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+);
+layout.setVerticalGroup(
+layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING,
+javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+);
+pack();
+}// </editor-fold>//GEN-END:initComponents
+/**
+* Exit the Application
+*/
+private void exitForm(java.awt.event.WindowEvent evt) {//GEN-
+FIRST:event_exitForm
+System.exit(0);
+}//GEN-LAST:event_exitForm
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+FIRST:event_jButton2ActionPerformed
+// TODO add your handling code here:
+new vehicle().setVisible(true);
+this.setVisible(false);
+}//GEN-LAST:event_jButton2ActionPerformed
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+FIRST:event_jButton1ActionPerformed
+new NewFrame1().setVisible(true);
+this.setVisible(false);
+}//GEN-LAST:event_jButton1ActionPerformed
+/**
+* @param args the command line arguments
+*/
+public static void main(String args[]) {
+java.awt.EventQueue.invokeLater(new Runnable() {
+public void run() {
+new vacant().setVisible(true);
+}
+});
+}
+// Variables declaration - do not modify//GEN-BEGIN:variables
+private javax.swing.JButton jButton1;
+private javax.swing.JButton jButton2;
+private javax.swing.JLabel jLabel1;
+private javax.swing.JPanel jPanel1;
+private javax.swing.JScrollPane jScrollPane2;
+private javax.swing.JTable jTable2;
+// End of variables declaration//GEN-END:variables
+vehicle.java
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package parking.management;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+public class vehicle extends java.awt.Frame {
+DateFormat dateformat=new SimpleDateFormat("MM/dd/YY");
+Date date = new Date();
+Calendar cal=Calendar.getInstance();
+int p= cal.get(Calendar.HOUR_OF_DAY);
+int m= cal.get(Calendar.MINUTE);
+int i=0;
+/**
+* Creates new form vehicle
+*/
+public vehicle() {
+initComponents();
+datetf.setText(" " + dateformat.format(date));
+timetf.setText(" "+p);
+timetf1.setText(" "+ m);
+}
+/**
+* This method is called from within the constructor to initialize the form.
+* WARNING: Do NOT modify this code. The content of this method is always
+* regenerated by the Form Editor.
+*/
+// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-
+BEGIN:initComponents
+private void initComponents() {
+jDialog1 = new javax.swing.JDialog();
+jDialog2 = new javax.swing.JDialog();
+jPanel1 = new javax.swing.JPanel();
+jLabel1 = new javax.swing.JLabel();
+jLabel2 = new javax.swing.JLabel();
+jLabel3 = new javax.swing.JLabel();
+jLabel4 = new javax.swing.JLabel();
+jLabel5 = new javax.swing.JLabel();
+jLabel6 = new javax.swing.JLabel();
+jLabel7 = new javax.swing.JLabel();
+plateT = new javax.swing.JTextField();
+nameT = new javax.swing.JTextField();
+payT = new javax.swing.JTextField();
+amtT = new javax.swing.JTextField();
+datetf = new javax.swing.JTextField();
+jLabel8 = new javax.swing.JLabel();
+backB = new javax.swing.JButton();
+fillB = new javax.swing.JButton();
+timetf = new javax.swing.JTextField();
+viewB = new javax.swing.JButton();
+hrsT = new javax.swing.JTextField();
+emailT = new javax.swing.JTextField();
+timetf1 = new javax.swing.JTextField();
+minT = new javax.swing.JTextField();
+jTextField1 = new javax.swing.JTextField();
+jLabel9 = new javax.swing.JLabel();
+jLabel11 = new javax.swing.JLabel();
+addWindowListener(new java.awt.event.WindowAdapter() {
+public void windowClosing(java.awt.event.WindowEvent evt) {
+exitForm(evt);
+}
+});
+jLabel1.setText("Name");
+jLabel2.setText("plate no.");
+jLabel3.setText("time of entry");
+jLabel4.setText("email id.");
+jLabel5.setText("time of departure");
+jLabel6.setText("payment type");
+jLabel7.setText("ammount");
+datetf.setEditable(false);
+jLabel8.setText("date");
+backB.setText("BACK");
+backB.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+backBActionPerformed(evt);
+}
+});
+fillB.setText("fill");
+fillB.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+fillBActionPerformed(evt);
+}
+});
+timetf.setEditable(false);
+viewB.setText("view");
+viewB.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+viewBActionPerformed(evt);
+}
+});
+timetf1.setEditable(false);
+jTextField1.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+jTextField1ActionPerformed(evt);
+}
+});
+jLabel9.setText("zone no");
+jLabel11.setIcon(new
+javax.swing.ImageIcon(getClass().getResource("/parking/management/smalllogo1.png"
+))); // NOI18N
+javax.swing.GroupLayout jPanel1Layout = new
+javax.swing.GroupLayout(jPanel1);
+jPanel1.setLayout(jPanel1Layout);
+jPanel1Layout.setHorizontalGroup(
+jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.L
+EADING)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGap(57, 57, 57)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.LEADING)
+.addComponent(jLabel6,
+javax.swing.GroupLayout.PREFERRED_SIZE, 233,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(jLabel7,
+javax.swing.GroupLayout.PREFERRED_SIZE, 2
+.addComponent(jLabel3,
+javax.swing.GroupLayout.PREFERRED_SIZE, 233,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(jLabel4,
+javax.swing.GroupLayout.PREFERRED_SIZE, 233,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(jLabel1,
+javax.swing.GroupLayout.PREFERRED_SIZE, 233,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(jLabel5,
+javax.swing.GroupLayout.PREFERRED_SIZE, 233,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(jLabel2,
+javax.swing.GroupLayout.PREFERRED_SIZE, 233,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(jLabel9))
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.LEADING)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGap(21, 21, 21)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.G
+roupLayout.Alignment.LEADING)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGroup(jPanel1Layout.createParallelGroup(javax
+.swing.GroupLayout.Alignment.LEADING)
+.addComponent(payT,
+javax.swing.GroupLayout.PREFERRED_SIZE, 352,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addGroup(jPanel1Layout.createSequentialGroup
+()
+.addComponent(timetf,
+javax.swing.GroupLayout.PREFERRED_SIZE, 43,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.
+ComponentPlacement.UNRELATED)
+.addComponent(timetf1,
+javax.swing.GroupLayout.PREFERRED_SIZE, 43,
+javax.swing.GroupLayout.PREFERRED_SIZE)))
+.addContainerGap(javax.swing.GroupLayout.DEFAULT_
+SIZE, Short.MAX_VALUE))
+.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+jPanel1Layout.createSequentialGroup()
+.addGroup(jPanel1Layout.createParallelGroup(javax
+.swing.GroupLayout.Alignment.LEADING)
+.addComponent(amtT,
+javax.swing.GroupLayout.PREFERRED_SIZE, 291,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addGroup(jPanel1Layout.createSequentialGroup
+()
+.addComponent(hrsT,
+javax.swing.GroupLayout.PREFERRED_SIZE, 43,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.
+ComponentPlacement.UNRELATED)
+.addComponent(minT,
+javax.swing.GroupLayout.PREFERRED_SIZE, 43,
+javax.swing.GroupLayout.PREFERRED_SIZE)))
+.addPreferredGap(javax.swing.LayoutStyle.Componen
+tPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+.addGroup(jPanel1Layout.createParallelGroup(javax
+.swing.GroupLayout.Alignment.LEADING, false)
+.addComponent(viewB,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+Short.MAX_VALUE)
+.addComponent(backB,
+javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+.addComponent(fillB,
+javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+.addGap(72, 72, 72))
+.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+jPanel1Layout.createSequentialGroup()
+.addComponent(jTextField1,
+javax.swing.GroupLayout.PREFERRED_SIZE, 32,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.Componen
+tPlacement.RELATED, 308, Short.MAX_VALUE)
+.addComponent(jLabel8,
+javax.swing.GroupLayout.PREFERRED_SIZE, 127,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.Componen
+tPlacement.RELATED)
+.addComponent(datetf,
+javax.swing.GroupLayout.PREFERRED_SIZE, 124,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addContainerGap())))
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGap(18, 18, 18)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.G
+roupLayout.Alignment.LEADING)
+.addComponent(emailT,
+javax.swing.GroupLayout.PREFERRED_SIZE, 294,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swi
+ng.GroupLayout.Alignment.TRAILING, false)
+.addComponent(plateT,
+javax.swing.GroupLayout.Alignment.LEADING)
+.addComponent(nameT,
+javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE,
+291, Short.MAX_VALUE)))
+.addGap(0, 0, Short.MAX_VALUE))))
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGap(65, 65, 65)
+.addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE,
+519, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addGap(0, 0, Short.MAX_VALUE))
+);
+jPanel1Layout.setVerticalGroup(
+jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.L
+EADING)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.TRAILING, false)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.G
+roupLayout.Alignment.LEADING)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGap(114, 114, 114)
+.addGroup(jPanel1Layout.createParallelGroup(javax
+.swing.GroupLayout.Alignment.BASELINE)
+.addComponent(jLabel8,
+javax.swing.GroupLayout.PREFERRED_SIZE, 27,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(datetf,
+javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.PREFERRED_SIZE))
+.addGap(37, 37, 37))
+.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+jPanel1Layout.createSequentialGroup()
+.addContainerGap()
+.addComponent(jTextField1,
+javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.PREFERRED_SIZE)))
+.addGap(39, 39, 39))
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGap(17, 17, 17)
+.addComponent(jLabel11,
+javax.swing.GroupLayout.PREFERRED_SIZE, 124,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlaceme
+nt.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+.addComponent(jLabel9)
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlaceme
+nt.UNRELATED)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.G
+roupLayout.Alignment.BASELINE)
+.addComponent(jLabel2,
+javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(plateT,
+javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.PREFERRED_SIZE))
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlaceme
+nt.UNRELATED)))
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.BASELINE)
+.addComponent(jLabel1,
+javax.swing.GroupLayout.PREFERRED_SIZE, 29,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(nameT, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+.addGap(18, 18, 18)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.LEADING)
+.addComponent(jLabel4,
+javax.swing.GroupLayout.PREFERRED_SIZE, 29,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(emailT, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELAT
+ED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.BASELINE)
+.addComponent(jLabel3,
+javax.swing.GroupLayout.PREFERRED_SIZE, 29,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(timetf, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(timetf1,
+javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.PREFERRED_SIZE))
+.addGap(31, 31, 31)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.BASELINE)
+.addComponent(jLabel5,
+javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(viewB)
+.addComponent(hrsT, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(minT, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELAT
+ED)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayo
+ut.Alignment.LEADING)
+.addGroup(jPanel1Layout.createSequentialGroup()
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.G
+roupLayout.Alignment.LEADING)
+.addComponent(jLabel6,
+javax.swing.GroupLayout.PREFERRED_SIZE, 29,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swi
+ng.GroupLayout.Alignment.BASELINE)
+.addComponent(payT,
+javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+javax.swing.GroupLayout.PREFERRED_SIZE)
+.addComponent(fillB)))
+.addPreferredGap(javax.swing.LayoutStyle.ComponentPlaceme
+nt.RELATED)
+.addGroup(jPanel1Layout.createParallelGroup(javax.swing.G
+roupLayout.Alignment.BASELINE)
+entialGroup()
+.addContainerGap()
+.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+Short.MAX_VALUE))
+);
+layout.setVerticalGroup(
+layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+.addGroup(layout.createSequentialGroup()
+.addContainerGap()
+.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+.addContainerGap(80, Short.MAX_VALUE))
+);
+pack();
+}// </editor-fold>//GEN-END:initComponents
+/**
+* Exit the Application
+*/
+private void exitForm(java.awt.event.WindowEvent evt) {//GEN-
+FIRST:event_exitForm
+System.exit(0);
+}//GEN-LAST:event_exitForm
+private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt)
+{//GEN-FIRST:event_jTextField1ActionPerformed
+// TODO add your handling code here:
+}//GEN-LAST:event_jTextField1ActionPerformed
+private void viewBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+FIRST:event_viewBActionPerformed
+// TODO add your handling code here:
+new parkview().setVisible(true);
+this.setVisible(false);
+}//GEN-LAST:event_viewBActionPerformed
+private void fillBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+FIRST:event_fillBActionPerformed
+// TODO add your handling code here:
+String nam = nameT.getText();
+String n = (plateT.getText());
+String t=timetf.getText();
+String m=timetf1.getText();
+String etime = t+":"+m;
+String emaili = emailT.getText();
+String dater= datetf.getText();
+int dtime = Integer.parseInt( hrsT.getText())*60+Integer.parseInt(
+minT.getText());
+String pay= payT.getText();
+int ammoun = Integer.parseInt( amtT.getText());
+int p=Integer.parseInt(jTextField1.getText());
+vacant.update(p);
+priority.enqueue(nam,n, emaili, etime, dtime, pay, ammoun,dater,p);
+if(i==0){
+Timer a=new Timer();
+a.start();
+}
+}//GEN-LAST:event_fillBActionPerformed
+private void backBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
+FIRST:event_backBActionPerformed
+new vacant().setVisible(true);
+this.setVisible(false);
+// TODO add your handling code here:
+}//GEN-LAST:event_backBActionPerformed
+/**
+* @param args the command line arguments
+*/
+public static void main(String args[]) {
+java.awt.EventQueue.invokeLater(new Runnable() {
+public void run() {
+new vehicle().setVisible(true);
+}
+});
+}
+// Variables declaration - do not modify//GEN-BEGIN:variables
+private javax.swing.JTextField amtT;
+private javax.swing.JButton backB;
+private javax.swing.JTextField datetf;
+private javax.swing.JTextField emailT;
+private javax.swing.JButton fillB;
+private javax.swing.JTextField hrsT;
+private javax.swing.JDialog jDialog1;
+private javax.swing.JDialog jDialog2;
+private javax.swing.JLabel jLabel1;
+private javax.swing.JLabel jLabel11;
+private javax.swing.JLabel jLabel2;
+private javax.swing.JLabel jLabel3;
+private javax.swing.JLabel jLabel4;
+private javax.swing.JLabel jLabel5;
+private javax.swing.JLabel jLabel6;
+private javax.swing.JLabel jLabel7;
+private javax.swing.JLabel jLabel8;
+private javax.swing.JLabel jLabel9;
+private javax.swing.JPanel jPanel1;
+private javax.swing.JTextField jTextField1;
+private javax.swing.JTextField minT;
+private javax.swing.JTextField nameT;
+private javax.swing.JTextField payT;
+private javax.swing.JTextField plateT;
+private javax.swing.JTextField timetf;
+private javax.swing.JTextField timetf1;
+private javax.swing.JButton viewB;
